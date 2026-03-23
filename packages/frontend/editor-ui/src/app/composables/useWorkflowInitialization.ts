@@ -86,6 +86,7 @@ export function useWorkflowInitialization(workflowState: WorkflowState) {
 
 	const isNewWorkflowRoute = computed(() => route.query.new === 'true');
 	const isDemoRoute = computed(() => route.name === VIEWS.DEMO);
+	const isDemoDiffRoute = computed(() => route.name === VIEWS.DEMO_DIFF);
 	const isTemplateRoute = computed(() => route.name === VIEWS.TEMPLATE_IMPORT);
 	const isOnboardingRoute = computed(() => route.name === VIEWS.WORKFLOW_ONBOARDING);
 	const isDebugRoute = computed(() => route.name === VIEWS.EXECUTION_DEBUG);
@@ -189,7 +190,8 @@ export function useWorkflowInitialization(workflowState: WorkflowState) {
 	}
 
 	async function initializeData() {
-		const isPreviewPage = settingsStore.isPreviewMode && isDemoRoute.value;
+		const isPreviewPage =
+			settingsStore.isPreviewMode && (isDemoRoute.value || isDemoDiffRoute.value);
 		const loadPromises = (() => {
 			if (isPreviewPage) return [];
 
@@ -423,6 +425,7 @@ export function useWorkflowInitialization(workflowState: WorkflowState) {
 		currentWorkflowDocumentStore,
 		isNewWorkflowRoute,
 		isDemoRoute,
+		isDemoDiffRoute,
 		isTemplateRoute,
 		isOnboardingRoute,
 		isDebugRoute,
